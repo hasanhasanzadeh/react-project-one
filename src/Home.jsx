@@ -7,29 +7,31 @@ import TodoList from "./components/todo/TodoList";
 export default function Home(){
     let [todoLists,setTodoList]=useState([]);
     let [description,setDescription]=useState('');
+    let [id,setId]=useState(1);
     const onChange=(event)=>{
         setDescription(event.target.value);
     }
     const todoAdd=()=>{
         if (description!==''){
-            setTodoList([...todoLists, {description:description,checked:0}]);
+            setTodoList([...todoLists, {description:description,checked:0,id:id}]);
             setDescription('');
+            setId(id+1);
         }
     }
 
-    const handelDeleted=(description)=>{
+    const handelDeleted=(id)=>{
         let newTodo=todoLists.filter((item)=>{
-            if (item.description===description){
+            if (item.id===id){
                 return false;
             }
             return true;
         });
         setTodoList(newTodo);
     }
-    const handelChecked = (description, status) => {
+    const handelChecked = (id, status) => {
         const updatedTodoList = todoLists.map(item => {
-            if (item.description === description) {
-                item.checked = status ? 1 : 0;
+            if (item.id === id) {
+               item.checked = status ? 1 : 0;
             }
             return item;
         });
